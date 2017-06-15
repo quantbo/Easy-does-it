@@ -27,14 +27,14 @@
 
 	<!--	Load CSS before JS; the latter may operate on the former.-->
 	<link rel="stylesheet" type="text/css" href="index.css">
-	<script src='index.js'></script>
+	<!-- <script src='index.js'></script> -->
 </head>
 <body>
 	<h1>Easy does it</h1>
 
 	<p id='pub'>Published: 2017-06-15</p>
 
-	<p class='exec-summ'>SUMMARY: An example of the amazing concision of the R language is provided.</p>
+	<p class='exec-summ'>SUMMARY: An example of the amazing concision of the R language is provided. Also: functions as objects, plotting.</p>
 	
 	<p>I recently needed a structure representing points randomly distributed in an n-dimensional space. A natural way to represent such points is a matrix, with each row corresponding to a point and with the n columns of the matrix corresponding to the n coordinates of the space.</p>
 	<p>I was delighted to find that I could generate such a matrix, in the R language, with a single line of code. In the code shown below I have wrapped the single line of code in a function. As you can see, the body of the function, not counting comments, is one line.</p>
@@ -52,7 +52,7 @@ gen_points = function(dim=2, num=10, FUN=rnorm) {
 
 	<h2>Cycling through functions</h2>
 
-	<p>Another convenient feature of R is that functions can be passed around like any other object. This is shown in the function above, where the third argument is an arbitrary function taking one argument. Let's demonstrate how convenient this is by generating a few plots using different random functions.</p>
+	<p>Another convenient feature of R is that functions can be passed around like any other object. This is shown in the <code>gen_points</code> function defined above, where the third argument of <code>gen_points</code> is an arbitrary function taking one argument. Let's demonstrate how convenient this is by generating a few plots using different random functions.</p>
 
 	<pre>
 source('gen_points.r')
