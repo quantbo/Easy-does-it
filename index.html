@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Easy does it</title>
+	
+	<!-- Enable jQuery. The lines below are copied from
+	https://code.jquery.com/ -->
+	<!-- 	<script
+	  src="https://code.jquery.com/jquery-3.2.1.min.js"
+	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	  crossorigin="anonymous"></script> -->
+	
+	<!-- Enable ASCII Math. Copied from
+	http://docs.mathjax.org/en/latest/start.html -->
+	<!-- <script type="text/javascript" async
+		src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script> -->
+	
+	<!-- Enable D3. -->
+	<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+	
+	<!-- Google font(s) -->
+	<!-- Must precede 'index.css'. -->
+	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'> <!-- Normal text. -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'> <!-- Headers. -->
+
+	<!--	Load CSS before JS; the latter may operate on the former.-->
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script src='index.js'></script>
+</head>
+<body>
+	<h1>Easy does it</h1>
+
+	<p id='pub'>Published: 2017-06-09</p>
+
+	<p class='exec-summ'>SUMMARY: An example of the amazing concision of the R language is provided.</p>
+	
+	<p>I recently needed a structure representing points randomly distributed in an n-dimensional space. A natural way to represent such points is a matrix, with each row corresponding to a point and with the n columns of the matrix corresponding to the n coordinates of the space.</p>
+	<p>I was delighted to find that I could generate such a matrix, in the R language, with a single line of code. In the code shown below I have wrapped the single line of code in a function. As you can see, the body of the function, not counting comments, is one line.</p>
+
+	<!-- In code samples tabs were converted to 2 spaces to better control display. -->
+	<pre>
+gen_points = function(dim=2, num=10, FUN=rnorm) {
+  #dim: The dimension of the space in which the points reside.
+  #num: The number of points.
+  #FUN: The random function used to generate coordinate values.
+  matrix(FUN(dim * num), nrow=num)
+}
+	</pre>
+	<p>The trick is to provide the <code>matrix</code> function with a vector of length <code>dimension * number of points</code>. You also tell the <code>matrix</code> function how many rows, or columns, the matrix should have&mdash;either one will do.</p>
+
+	<h2>Cycling through functions</h2>
+
+	<p>Another convenient feature of R is that functions can be passed around like any other object. This is shown in the function above, where the third argument is an arbitrary function taking one argument. Let's demonstrate how convenient this is by generating a few plots using different random functions.</p>
+
+	<pre>
+source('gen_points.r')
+
+gen_plots = function() {
+  num = 2^12 #Number of points in each plot.
+  height = width = 750 #Image dimensions in pixels.
+  #A list of random functions.
+  functions = c(rexp, runif, rnorm, rcauchy)
+  names = c('Exponential', 'Uniform', 'Normal', 'Cauchy')
+  #Make sure each function has a name.
+  stopifnot(length(functions) == length(names))
+
+  #For each function generate a plot.
+  for (ii in 1:length(functions)) {
+    filename = paste(names[ii], '.png', sep='')
+    png(filename=filename, height=height, width=width)
+    #functions is a list; therefore, each element must be accessed with double brackets.
+    mat = gen_points(2, num, functions[[ii]])
+    main = paste(num, 'points, with ', names[ii], ' coordinates')
+    plot(mat, main=main, cex.main=2, cex.axis=2, mgp=c(0, 1.5, 0),
+      col=rgb(0, 0.3, 0.5, 1/2), cex=1.5, xlab='', ylab='')
+    dev.off()
+  }
+}
+	</pre>
+
+	<p>In addition to the matrix of data points (<code>mat</code>), the <code>plot</code> function takes additional arguments in the foregoing code. They control the size of the main title; the size of axis labels; the position of axis labels with respect to the axes; the color and transparency of plot points; the size of plot points; and eliminate axis titles.</p>
+	<p>The plots that are generated are as follows:</p>
+
+	<img src="Exponential.png" height="400px">
+	<img src="Uniform.png" height="400px">
+	<img src="Normal.png" height="400px">
+	<img src="Cauchy.png" height="400px">
+
+	<p>The Cauchy plot tends to be cross shaped. This is because the Cauchy distribution has fat tails, meaning it is prone to generate extreme values. However, it is rare for two extreme values to be generated at the same time. Therefore, we get a plot where extreme x values tend to be paired with moderate y values, and extreme y values tend to be paired with moderate x values. This generates the cross shaped plot that we observe.</p>
+
+	<footer>
+	<p id=copyright>Copyright (C) 2017, John Van Praag</p>
+	</footer>
+</body>
+</html>
