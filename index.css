@@ -58,7 +58,7 @@ pre {
 	font-weight: lighter;
 	margin-bottom: -1em;
 }
-/*A centered image. Place the img element within a div, assigned this class.*/
+/*A centered image. Place the img element within a div assigned this class.*/
 div.centered-image {
 	margin-top: -1em;
 	text-align: center;
