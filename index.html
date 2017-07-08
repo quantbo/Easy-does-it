@@ -30,6 +30,8 @@
 	<!-- <script src='index.js'></script> -->
 	<style>
 		img#r-menu {
+			/*The border color is borrowed from the following post:
+			https://css-tricks.com/using-css-for-image-borders/*/
 		  border:1px solid #021a40;
 		  margin-bottom: 0.1em;
 		  margin-top: 1.1em;
@@ -45,7 +47,7 @@
 
 	<p id='pub'>Published: 2017-06-15</p>
 
-	<p class='exec-summ'>SUMMARY: An example of the amazing concision of the R language is provided. Also: functions as objects, plotting.</p>
+	<p class='exec-summ'>SUMMARY: An example of the amazing concision of the R language is provided. Also: functions as objects; plotting.</p>
 	
 	<p>I recently needed a structure representing points randomly distributed in an n-dimensional space. A natural way to represent such points is a matrix, with each row corresponding to a point and with the n columns of the matrix corresponding to the n coordinates of the space.</p>
 	<p>I was delighted to find that I could generate such a matrix, in the R language, with a single line of code. In the code shown below I have wrapped the single line of code in a function. As you can see, the body of the function, not counting comments, is one line.</p>
